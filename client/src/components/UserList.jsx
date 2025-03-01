@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import userSrevice from "../services/userSrevice";
 
@@ -8,10 +8,12 @@ import UserListItem from "./UserListItem";
 
 export default function UsetList(){
 
+    const [users, setUsers] = useState([])
+
     useEffect(() =>{
         userSrevice.getAll()
             .then(result => {
-                console.log(result)
+                setUsers(result)
             })
     }, [])
     return (
