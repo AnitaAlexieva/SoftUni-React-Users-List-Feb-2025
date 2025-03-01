@@ -28,13 +28,39 @@ export default function UsetList(){
         setShowCreate(false)
     }
 
+    const saveCreateUserClickNadler = async (e) =>{
+        //Stop default refresh behaviour
+        e.preventDefault()
+
+        //Get form data
+        const formData = new FormData(e.target)
+        const userData = Object.fromEntries(formData)
+
+        //create new user on server
+        const newUser = await userSrevice.create(userData)
+
+        //update local state
+        setUsers(state => [...state], newUser)
+
+
+        //close modal 
+        setShowCreate(false) 
+    }
+
+
+
     return (
         <section className="card users-container">
         {/* <!-- Search bar component --> */}
      
         <Search />
 
-        {showCreate && <UserCreate  onClose={closeCreateUserClickHandler}/>}
+        {showCreate && 
+            <UserCreate 
+                onClose={closeCreateUserClickHandler}
+                onSave = {saveCreateUserClickNadler}
+            />}
+
         {/* <!-- Table component --> */}
         <div className="table-wrapper">
             <div className="overlays">
