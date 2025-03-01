@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 
 import userSrevice from "../services/userSrevice";
 
@@ -136,7 +136,11 @@ export default function UsetList(){
             </thead>
             <tbody>
               {/* <!-- Table row component --> */}
-              <UserListItem />
+              {users.map(user => <UserListItem 
+                    key={user._id} 
+                    {...user}
+                /> )}
+              
             </tbody>
           </table>
         </div>
