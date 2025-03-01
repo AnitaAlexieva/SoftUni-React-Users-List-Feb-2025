@@ -1,8 +1,19 @@
+import { useEffect } from "react";
+
+import userSrevice from "../services/userSrevice";
+
 import Pagination from "./Pagination";
 import Search from "./Search";
 import UserListItem from "./UserListItem";
 
 export default function UsetList(){
+
+    useEffect(() =>{
+        userSrevice.getAll()
+            .then(result => {
+                console.log(result)
+            })
+    }, [])
     return (
         <section className="card users-container">
         {/* <!-- Search bar component --> */}
