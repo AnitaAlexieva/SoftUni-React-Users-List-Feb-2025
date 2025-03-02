@@ -1,4 +1,3 @@
-import { use } from "react"
 
 const baseUrl = 'http://localhost:3030/jsonstore/users'
 
@@ -31,6 +30,12 @@ export default{
     
         const result = await response.json();
         return result;
-    }
+    },
+    async getOne(userId){
+        const response =  await fetch(`${baseUrl}/${userId}`)
+        const user = await response.json()
+        
+        return user
+    }   
     
 }
