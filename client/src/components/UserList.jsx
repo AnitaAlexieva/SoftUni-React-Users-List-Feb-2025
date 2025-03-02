@@ -93,6 +93,7 @@ export default function UsetList(){
          //Update local state
 
          //Close modal
+         setUserIdEdit(null)
 
     }
     return (
