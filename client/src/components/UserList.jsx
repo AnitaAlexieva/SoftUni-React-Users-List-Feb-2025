@@ -6,11 +6,13 @@ import Pagination from "./Pagination";
 import Search from "./Search";
 import UserListItem from "./UserListItem";
 import UserCreate from "./UserCreate";
+import UserInfo from "./UserInfo";
 
 export default function UsetList(){
 
     const [users, setUsers] = useState([])
     const [showCreate, setShowCreate] = useState(false)
+    const [showUserId, setShowUserId] = useState();
 
     useEffect(() =>{
         userSrevice.getAll()
@@ -47,7 +49,13 @@ export default function UsetList(){
         setShowCreate(false) 
     }
 
+    const userInfoClickHandler = (userId) =>{
+      setShowUserId(userId)
+    }
 
+    // const closeUserInfoClickHandler = () =>{
+
+    // }
 
     return (
         <section className="card users-container">
@@ -60,6 +68,12 @@ export default function UsetList(){
                 onClose={closeCreateUserClickHandler}
                 onSave = {saveCreateUserClickNadler}
             />}
+
+        {showUserId && 
+            <UserInfo
+                userId = {showUserId}
+            />    
+        }
 
         {/* <!-- Table component --> */}
         <div className="table-wrapper">
@@ -177,6 +191,7 @@ export default function UsetList(){
               {/* <!-- Table row component --> */}
               {users.map(user => <UserListItem 
                     key={user._id} 
+                    onInfo = {userInfoClickHandler}
                     {...user}
                 /> )}
               
