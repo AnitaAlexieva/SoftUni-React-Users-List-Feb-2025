@@ -36,6 +36,15 @@ export default{
         const user = await response.json()
         
         return user
-    }   
+    },
+    async delete(userId){
+        const response = await fetch(`${baseUrl}/${userId}`,{
+            method:'DELETE'
+        })
+
+        const result = await response.json()
+
+        return result
+    }
     
 }
