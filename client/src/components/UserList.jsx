@@ -12,7 +12,7 @@ export default function UsetList(){
 
     const [users, setUsers] = useState([])
     const [showCreate, setShowCreate] = useState(false)
-    const [showUserId, setShowUserId] = useState();
+    const [showUserId, setShowUserId] = useState(null);
 
     useEffect(() =>{
         userSrevice.getAll()
@@ -53,9 +53,9 @@ export default function UsetList(){
       setShowUserId(userId)
     }
 
-    // const closeUserInfoClickHandler = () =>{
-
-    // }
+    const closeUserInfoClickHandler = () =>{
+      setShowUserId(null)
+    }
 
     return (
         <section className="card users-container">
@@ -72,6 +72,7 @@ export default function UsetList(){
         {showUserId && 
             <UserInfo
                 userId = {showUserId}
+                onCloseInfo = {closeUserInfoClickHandler}
             />    
         }
 
