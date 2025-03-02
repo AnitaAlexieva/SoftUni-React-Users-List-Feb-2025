@@ -80,7 +80,7 @@ export default function UsetList(){
     const userEditClickHandler = (userId) =>{
     setUserIdEdit(userId)
   }
-    const saveEditUserClickHandler = (e) =>{
+    const saveEditUserClickHandler = async(e) =>{
          //Stop default refresh behaviour
          e.preventDefault()
 
@@ -89,7 +89,7 @@ export default function UsetList(){
          const userData = Object.fromEntries(formData)
 
          //Update user on server
-
+          await userSrevice.edit(userIdEdit, userData)
          //Update local state
 
          //Close modal
@@ -122,7 +122,7 @@ export default function UsetList(){
                 userId={userIdEdit}
                 onClose={closeCreateUserClickHandler}
                 onSave = {saveCreateUserClickNadler}
-                onUpdate=
+                onUpdate={saveEditUserClickHandler}
         />}
 
 
