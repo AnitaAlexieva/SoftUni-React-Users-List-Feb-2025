@@ -11,15 +11,9 @@ export default{
         return users
     },
     async create(userData) {
-        const { country, city, street, streetNumber } = userData;
-    
-        // Уверете се, че postData е дефиниран
-        const postData = { ...userData };
-    
-        postData.address = { country, city, street, streetNumber };
-        postData.createdAt = new Date().toISOString();
-        postData.updatedAt = new Date().toISOString();
-    
+        
+        const postData = transformUserData(userData)
+
         const response = await fetch(baseUrl, {
             method: 'POST',
             headers: {
@@ -45,6 +39,34 @@ export default{
         const result = await response.json()
 
         return result
+    },
+    async edit(userId, userData) {
+
+        const postData = transformUserData(userData)
+
+        const response = await fetch(baseUrl, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(postData)
+        });
+    
+        const result = await response.json();
+        return result;
     }
     
+}
+
+function transformUserData(userData){
+    const { country, city, street, streetNumber } = userData;
+    
+    // Уверете се, че postData е дефиниран
+    const transformedData = { ...transformedData };
+
+    transformedData.address = { country, city, street, streetNumber };
+    transformedData.createdAt = new Date().toISOString();
+    transformedData.updatedAt = new Date().toISOString();
+
+    return transformedData
 }

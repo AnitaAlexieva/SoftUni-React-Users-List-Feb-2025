@@ -15,6 +15,7 @@ export default function UsetList(){
     const [showCreate, setShowCreate] = useState(false)
     const [showUserId, setShowUserId] = useState(null);
     const [userIdDelete, setUserIdDelete] = useState(null)
+    const [userIdEdit, setUserIdEdit] = useState(null)
 
     useEffect(() =>{
         userSrevice.getAll()
@@ -30,6 +31,7 @@ export default function UsetList(){
 
     const closeCreateUserClickHandler = () =>{
         setShowCreate(false)
+        setUserIdEdit(null)
     }
 
     const saveCreateUserClickNadler = async (e) =>{
@@ -68,12 +70,30 @@ export default function UsetList(){
     }
 
     const userDeleteHandler = async()=>{
-        //Delete request to server
-        await userSrevice.delete(userIdDelete)
-        //Delete from local state
-        setUsers(state => state.filter(user => user._id != userIdDelete))
-        //Close modal
-        setUserIdDelete(null)
+      //Delete request to server
+      await userSrevice.delete(userIdDelete)
+      //Delete from local state
+      setUsers(state => state.filter(user => user._id != userIdDelete))
+      //Close modal
+      setUserIdDelete(null)
+    }
+    const userEditClickHandler = (userId) =>{
+    setUserIdEdit(userId)
+  }
+    const saveEditUserClickHandler = (e) =>{
+         //Stop default refresh behaviour
+         e.preventDefault()
+
+         //Get form data
+         const formData = new FormData(e.target)
+         const userData = Object.fromEntries(formData)
+
+         //Update user on server
+
+         //Update local state
+
+         //Close modal
+
     }
     return (
         <section className="card users-container">
@@ -97,6 +117,15 @@ export default function UsetList(){
               onClose = {closeUserDeleteClickHandler}
               onDelete = {userDeleteHandler}
         />}
+
+        {userIdEdit && <UserCreate 
+                userId={userIdEdit}
+                onClose={closeCreateUserClickHandler}
+                onSave = {saveCreateUserClickNadler}
+                onUpdate=
+        />}
+
+
         {/* <!-- Table component --> */}
         <div className="table-wrapper">
             <div className="overlays">
@@ -215,6 +244,7 @@ export default function UsetList(){
                     key={user._id} 
                     onInfo = {userInfoClickHandler}
                     onDelete = {userDeleteClickHandler}
+                    onEdit = {userEditClickHandler}
                     {...user}
                 /> )}
               
