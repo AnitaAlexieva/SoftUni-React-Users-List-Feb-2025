@@ -13,6 +13,7 @@ export default{
     async create(userData) {
         
         const postData = transformUserData(userData)
+  
 
         const response = await fetch(baseUrl, {
             method: 'POST',
@@ -43,8 +44,8 @@ export default{
     async edit(userId, userData) {
 
         const postData = transformUserData(userData)
-
-        const response = await fetch(baseUrl, {
+        postData._id = userId
+        const response = await fetch(`${baseUrl}/${userId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -62,7 +63,7 @@ function transformUserData(userData){
     const { country, city, street, streetNumber } = userData;
     
     // Уверете се, че postData е дефиниран
-    const transformedData = { ...transformedData };
+    const transformedData = { ...userData };
 
     transformedData.address = { country, city, street, streetNumber };
     transformedData.createdAt = new Date().toISOString();
